@@ -1,0 +1,32 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    @if(Model.previousPath == "")
+    {
+        <a href="/">Back</a>
+    }
+    else
+    {
+        <a href="/?handler=Dir&directory=@Model.previousPath">Back</a>
+    }
+    <table>
+        <thead>
+            <th>File</th>
+            <th>Size in KB</th>
+        </thead>
+        <tbody align="left">
+            @foreach (var item in Model.RootDirs.Distinct())
+            {
+                <tr><td><a href="/?handler=Dir&directory=@item"><img src="https://icons.iconarchive.com/icons/paomedia/small-n-flat/256/folder-icon.png" height=18 width=18> @item.Split("/").Last()</a></td></tr>
+            }
+            @foreach (var item in Model.data.Where(x => x.dir == Model.currentDirectory))
+            {
+                <tr><td><a href="@Model.bloburl/@item.dir/@item.filename"><img src="https://cdn1.iconfinder.com/data/icons/neutro-essential/32/document-256.png" height=18 width=18> @item.filename</a></td><td>@item.size</td></tr>
+            }
+        </tbody>
+    </table>
+</div>
