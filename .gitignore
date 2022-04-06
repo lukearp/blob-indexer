@@ -125,6 +125,8 @@ _NCrunch_*
 .*crunch*.local.xml
 nCrunchTemp_*
 
+wwwroot/icons/logos
+
 # MightyMoose
 *.mm.*
 AutoTest.Net/
