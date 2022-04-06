@@ -33,8 +33,14 @@
             @foreach (var item in Model.data.Where(x => x.dir == Model.currentDirectory))
             {
                 <tr>
-                    <td><a href="@Model.bloburl/@item.dir/@item.filename"><img src="icons/document-256.webp" height=18
-                            width=18> @item.filename</a></td>
+                     @if(item.dir == "")
+                    {
+                        <td><a href="@Model.bloburl/@item.filename" download="@item.filename"><img src="icons/document-256.webp" height=18 width=18> @item.filename</a></td>
+                    }
+                    else
+                    {
+                        <td><a href="@Model.bloburl/@item.dir/@item.filename" download="@item.filename"><img src="icons/document-256.webp" height=18 width=18> @item.filename</a></td>
+                    }
                     <td>@item.size</td>
                 </tr>
             }
