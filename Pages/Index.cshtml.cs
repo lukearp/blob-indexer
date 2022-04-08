@@ -16,7 +16,7 @@ public class IndexModel : PageModel
     private string connectionString;
     private string containerName;
     public List<BlobItem> blobs;
-    private BlobContainerClient blobClient;
+    private static BlobContainerClient blobClient;
     public string bloburl;
     public List<dataTree> data;
     private int count;
@@ -49,7 +49,8 @@ public class IndexModel : PageModel
         blobs = blobClient.GetBlobs().OrderByDescending(x => x.Properties.CreatedOn).ToList<BlobItem>();
         foreach(BlobItem blob in blobs)
         {
-            data.Add(new dataTree() { filename = blob.Name.Split("/").Last(), dir = String.Join("/",blob.Name.Split("/").SkipLast(1))});
+            nullableDouble = blob.Properties.ContentLength;
+            data.Add(new dataTree() { filename = blob.Name.Split("/").Last(), dir = String.Join("/",blob.Name.Split("/").SkipLast(1)), size = nullableDouble.Value / 1000.0});
         }
         RootDirs = data.Where(x => x.dir != "").Select(y => y.dir.Split("/")[0]).ToList<string>();
     }
